@@ -6,56 +6,57 @@
 //
 
 import SwiftUI
-import SwiftData
+
+struct book: Identifiable {
+    let id = UUID()
+    let title: String
+    let author: String
+    let cover: String
+    var summary: String {
+        "\(title) by \(author)"
+    }
+}
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    
+    let books = [
+        Book(title: "The Fellowship of the Ring", author: "J.R.R.Tolkien",cover:"lotr_fellowship"),
+        
+        Book(title: "The Two Towers", author: "John WB Jameon", cover: "lotr_towers"),
 
+        Book(title: "The Return of the King", author: "Michelle William", cover: "lotr_king", summary: "This is the second book in the LOR trilogy."),
+    ]
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationStack {
+            List(books) { book in
+                NavigationLink(destination: DetailView()) {
+                    HStack{
+                        Image(book.cover)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width:60, height: 60)
+                        VStack(alignment: .leading){
+                            Text(book.title)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                            Text(book.author)
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
+               
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
+            .navigationTitle("Book Manager")
+            
+            
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
+        
+        
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
-}
+//#Preview {
+   // ContentView()
+        
+//}
+

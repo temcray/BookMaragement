@@ -7,12 +7,16 @@
 
 import SwiftUI
 
-struct Book: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct Book: Identifiable {
+    let id: UUID = UUID()
+    var title: String
+    var author: String
+    var cover: String
+    
+        
+    
 }
 
-#Preview {
-    Book()
-}
+
+
+
