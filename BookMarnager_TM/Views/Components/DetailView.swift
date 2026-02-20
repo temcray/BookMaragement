@@ -2,7 +2,7 @@
 //  DetailView.swift
 //  BookMarnager_TM
 //
-//  Created by Tatiana6mo on 2/17/26.
+//  Created by Tatiana6mo on 2/19/26.
 //
 
 import SwiftUI

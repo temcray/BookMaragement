@@ -1,18 +1,18 @@
 //
-//  ListitemView.swift
+//  SummaryView.swift
 //  BookMarnager_TM
 //
-//  Created by Tatiana6mo on 2/17/26.
+//  Created by Tatiana6mo on 2/19/26.
 //
 
 import SwiftUI
 
-struct ListitemView: View {
+struct SummaryView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    ListitemView()
+    SummaryView()
 }
