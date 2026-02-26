@@ -1,18 +1,18 @@
 //
-//  Album.swift
+//  ListView.swift
 //  BookMarnager_TM
 //
-//  Created by Tatiana6mo on 2/20/26.
+//  Created by Tatiana6mo on 2/24/26.
 //
 
 import SwiftUI
 
-struct Album: View {
+struct ListView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    Album()
+    ListView()
 }
