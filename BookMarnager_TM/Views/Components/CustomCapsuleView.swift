@@ -1,18 +1,18 @@
 //
-//  AddEditView.swift
+//  CustomCapsuleView.swift
 //  BookMarnager_TM
 //
-//  Created by Tatiana6mo on 2/20/26.
+//  Created by Tatiana6mo on 2/26/26.
 //
 
 import SwiftUI
 
-struct AddEditView: View {
+struct CustomCapsuleView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    AddEditView()
+    CustomCapsuleView()
 }
