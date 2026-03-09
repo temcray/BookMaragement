@@ -10,7 +10,7 @@ import SwiftData
 
 struct ListView: View {
     @Query var books: [PersistentBook]
-    
+    @Environment(\.modelContext) private var modelContext
     @State private var showAddSheet = false
     
     
@@ -28,7 +28,7 @@ struct ListView: View {
             .sheet(isPresented: $showAddSheet){
            
             }content:{
-                    AddEditView()
+                AddEditView(book: nil, modelContext: modelContext)
                 
             }
         }

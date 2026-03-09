@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-struct GenreView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    GenreView()
+enum Genre: String, CaseIterable, Hashable, Codable{
+    case classic = "Classic"
+    case fantasy = "Fantasy"
+    case mystery = "Mystery"
+    case romance = "Romance"
+    case sciFi = "Sci-Fi"
+    case thriller = "Thriller"
+    case autobiography = "Autobiography"
+    
+    case unknown = "Unknown"
+    
 }

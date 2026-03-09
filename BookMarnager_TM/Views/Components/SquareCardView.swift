@@ -8,11 +8,45 @@
 import SwiftUI
 
 struct SquareCardView: View {
+    var book: PersistentBook
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text(book.title)
+            .frame(maxWidth: .infinity)
+            .font(.headline)
+            .foregroundColor(.white)
+            .lineLimit(2)
+            .multilineTextAlignment(.center)
+            .padding()
+            .background(LinearGradient(
+                colors:[.clear, .black.opacity(0.8)],
+                startPoint: .bottom,
+                endPoint: .top
+            ))
+            Spacer()
+            Text(book.author)
+                .frame(maxWidth: .infinity)
+                .font(.subheadline)
+                .foregroundColor(.white)
+                .lineLimit(1)
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(LinearGradient(
+                    colors:[.clear, .black.opacity(0.8)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                Image(uiImage:book.cover)
+                    .resizable()
+                    .scaledToFill()
+            )
+            .aspectRatio(1, contentMode: .fit)
+            .cornerRadius(12)
+        }
+      
+        
     }
 }
 
-#Preview {
-    SquareCardView()
-}

@@ -6,88 +6,74 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct DetailView: View {
-    
-    @Binding var book: Book
+    var book: PersistentBook
+    @State private var showEditSheet: Bool = false
+    @State private var isFavorite: Bool = false
+    @Environment(\.modelContext) private var modelContext
+    init(book:PersistentBook){
+            self.book = book
+            self.isFavorite = book.isFavorite
+        }
     
     var body: some View {
-        ScrollView {
-            
-            VStack(spacing: 10) {
-                
-                Text(book.title)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                
-                Image(book.cover)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 250)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                
-                VStack(alignment: .leading, spacing: 10) {
+        ScrollView{
+            VStack(alignment: .leading){
+                HStack{
+                    Image(uiImage:book.cover)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 150)
+                        .padding()
                     
-                    HStack {
-                        Text("Author:")
-                            .fontWeight(.semibold)
-                        Text(book.author)
-                    }
-                    
-                    HStack {
-                        Text("Year:")
-                            .fontWeight(.semibold)
-                        Text("\(book.year)")
-                    }
-                    
-                    HStack {
-                        Text("Summary:")
-                            .fontWeight(.semibold)
-                        Text(book.summary)
-                    }
-                    
-                    HStack{
-                        ForEach(1...5, id: \.self) {
-                            number in
-                            Image(systemName: number <= book.rating ? "star.fill" : "star")
-                                .foregroundColor(.yellow)
-                                .onTapGesture {
-                                    book.rating = number
+                    VStack(alignment: .leading){
+                        Text(book.title)
+                            .font(.headline)
+                        Text("by\(book.author)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        
+                        HStack{
+                            CustomCapsuleView(text: book.genre.rawValue, color: .red)
+                            CustomCapsuleView(text: book.readingStatus.rawValue, color: .blue)
+                            Spacer()
+                            FavoriteToggle(isFavorite: $isFavorite)
+                                .onChange(of:isFavorite){
+                                    book.isFavorite = isFavorite
+                                    try? modelContext.save()
                                 }
                         }
                     }
                     
-                    HStack {
-                        Spacer()
-                        Toggle(isOn: $book.isFavorite){
-                            Image(systemName: book.isFavorite ? "heart.fill" : "heart")
-                                .foregroundStyle(book.isFavorite ? .red : .secondary)
-                                .font(.title)
+                }
+                
+                Text(book.summary)
+                
+                if(book.rating > 0 || !book.review.isEmpty){
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text("Review")
+                                .font(.title2)
+                                .bold()
+                            Spacer()
+                            
+                            StarRatingView(rating: book.rating)
                         }
-                        .toggleStyle(.button)
-                        .buttonStyle(.plain)
-                        .animation(.spring, value: book.isFavorite)
-                        
-                    }
+                        Text(book.review)
+                    }.padding(.vertical, 10)
                 }
-                .padding()
-                    
-                NavigationLink("Read Summary") {
-                    SummaryView(book: book)
-                }
-                .buttonStyle(.borderedProminent)
             }
-            .padding()
+            .padding(.horizontal)
         }
-        .navigationTitle(book.title)
+        .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
-        
+        .navigationBarItems(trailing: Button("Edit", action:{
+            showEditSheet.toggle()
+        }))
+        .sheet(isPresented: $showEditSheet){
+            AddEditView(book: book, modelContext: modelContext)
+        }
     }
 }
-
-//#Preview {
-    //DetailView()
-//}
-

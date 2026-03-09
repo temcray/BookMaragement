@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct CustomCapsuleView: View {
+    var text: String
+    var color: Color = .accentColor
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(text)
+            .font(.caption)
+            .fontWeight(.bold)
+            .padding(8)
+            .background(color.opacity(0.3))
+            .clipShape(Capsule())
+        
     }
 }
 
-#Preview {
-    CustomCapsuleView()
-}
+//#Preview {
+    //CustomCapsuleView()
+//}

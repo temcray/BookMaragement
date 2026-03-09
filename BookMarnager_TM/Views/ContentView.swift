@@ -8,41 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage(SETTING_THEME_KEY) private var theme: Theme = .system
+    @AppStorage(SETTING_ACCENT_COLOR_KEY) private var accentColor: Color = .blue
     
-    let books = [
-       
-        Book(title: "The Return of the King",
-             author: "Michelle William",
-             cover: "lotr_king"),
-    ]
-    
-    var body: some View {
-       
-        NavigationStack {
-            List(books) { book in
-                NavigationLink(destination: DetailView(book: book)) {
-                    HStack {
-                        Image(book.cover)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                        VStack(alignment: .leading){
-                            Text(book.title)
-                                .font(.headline)
-                                .fontWeight(.bold)
-                            Text(book.author)
-                           }
-                        
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Book Manager")
+    var colorScheme: ColorScheme? {
+        switch theme {
+        case .system:
+            return nil
+        case .dark:
+            return .dark
+            
+        case .light:
+            return .light
+            
         }
     }
-
-
-//#Preview {
- //   ContentView()
-//}
-
+    
+    var body: some View {
+        TabView{
+            ListView()
+                .tabItem{
+                    Label("Books", systemImage: "books.vertical.fill")
+                }
+            FavoritesView()
+                .tabItem{
+                    Label("Favorite", systemImage: "heart.fill")
+                }
+            SettingView()
+                .tabItem{
+                    Label("Setting", systemImage: "gear")
+                }
+        }
+        .tint(accentColor)
+        .preferredColorScheme(colorScheme)
+    }
+}
