@@ -97,7 +97,7 @@ struct UtilsTest {
         
         let filteredBooks = filterFavoriteBooks(books: books, genre: .romance, readingStatus: .finished)
         
-        #expect(filteredBooks.count == 2)
+        #expect(filteredBooks.count == 1)
         #expect(filteredBooks.first? .title == "Book 3")
         
     }
